@@ -1352,6 +1352,48 @@
       "when": 1784920485226,
       "tag": "0194_company_skill_releases",
       "breakpoints": true
+    },
+    {
+      "idx": 195,
+      "version": "7",
+      "when": 1785170000001,
+      "tag": "0195_built_in_agent_unique_marker",
+      "breakpoints": true
+    },
+    {
+      "idx": 196,
+      "version": "7",
+      "when": 1785170001001,
+      "tag": "0196_drop_cloud_upstream_tables",
+      "breakpoints": true
+    },
+    {
+      "idx": 197,
+      "version": "7",
+      "when": 1785175200000,
+      "tag": "0197_decisions_v1",
+      "breakpoints": true
+    },
+    {
+      "idx": 198,
+      "version": "7",
+      "when": 1785603158310,
+      "tag": "0198_decision_queues_and_triage",
+      "breakpoints": true
+    },
+    {
+      "idx": 199,
+      "version": "7",
+      "when": 1785605818353,
+      "tag": "0199_decision_queue_composite_key",
+      "breakpoints": true
+    },
+    {
+      "idx": 200,
+      "version": "7",
+      "when": 1785636530237,
+      "tag": "0200_issue_version",
+      "breakpoints": true
     }
   ]
 }

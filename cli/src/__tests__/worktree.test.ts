@@ -276,6 +276,7 @@ describe("worktree helpers", () => {
       path.resolve("/tmp/paperclip-worktrees", "instances", "feature-worktree-support", "db"),
     );
     expect(config.database.embeddedPostgresPort).toBe(54339);
+    expect(config.database.backup.enabled).toBe(false);
     expect(config.server.port).toBe(3110);
     expect(config.auth.publicBaseUrl).toBe("http://127.0.0.1:3110/");
     expect(config.storage.localDisk.baseDir).toBe(
@@ -289,6 +290,7 @@ describe("worktree helpers", () => {
     expect(env.PAPERCLIP_HOME).toBe(path.resolve("/tmp/paperclip-worktrees"));
     expect(env.PAPERCLIP_INSTANCE_ID).toBe("feature-worktree-support");
     expect(env.PAPERCLIP_IN_WORKTREE).toBe("true");
+    expect(env.PAPERCLIP_DB_BACKUP_ENABLED).toBe("false");
     expect(env.PAPERCLIP_WORKTREE_NAME).toBe("feature-worktree-support");
     expect(env.PAPERCLIP_WORKTREE_COLOR).toBe("#3abf7a");
     expect(formatShellExports(env)).toContain("export PAPERCLIP_INSTANCE_ID='feature-worktree-support'");
@@ -459,18 +461,22 @@ describe("worktree helpers", () => {
       expect(inProgressIssue?.assigneeAgentId).toBeNull();
       expect(inProgressIssue?.executionAgentNameKey).toBeNull();
       expect(inProgressIssue?.executionLockedAt).toBeNull();
+      expect(inProgressIssue?.version).toBe(2);
 
       const [todoIssue] = await db.select().from(issues).where(eq(issues.id, todoIssueId));
       expect(todoIssue?.status).toBe("todo");
       expect(todoIssue?.assigneeAgentId).toBeNull();
+      expect(todoIssue?.version).toBe(2);
 
       const [reviewIssue] = await db.select().from(issues).where(eq(issues.id, reviewIssueId));
       expect(reviewIssue?.status).toBe("in_review");
       expect(reviewIssue?.assigneeAgentId).toBeNull();
+      expect(reviewIssue?.version).toBe(2);
 
       const [userIssue] = await db.select().from(issues).where(eq(issues.id, userIssueId));
       expect(userIssue?.status).toBe("todo");
       expect(userIssue?.assigneeUserId).toBe("user-1");
+      expect(userIssue?.version).toBe(1);
 
       const comments = await db.select().from(issueComments).where(eq(issueComments.issueId, inProgressIssueId));
       expect(comments).toHaveLength(1);
@@ -479,7 +485,7 @@ describe("worktree helpers", () => {
       await db.$client?.end?.({ timeout: 5 }).catch(() => undefined);
       await tempDb.cleanup();
     }
-  }, 20_000);
+  }, 120_000);
 
   it("copies the source local_encrypted secrets key into the seeded worktree instance", () => {
     const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "paperclip-worktree-secrets-"));

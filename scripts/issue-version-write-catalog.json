@@ -1,0 +1,1486 @@
+{
+  "schemaVersion": "paperclip_issue_version_write_catalog_v2",
+  "baseline": {
+    "acceptedEntryDigestSha256": "C6223AB6BCD2390F5A63CE660435FDE0195FFD9C74D9B2720C81043CCFFEE01B",
+    "observedDigestSha256": "BB0FA547BD90EF7630FC5F8F15371C812B4DB88D0DF5D8DD6942287EEA70827B",
+    "counts": {
+      "total": 76,
+      "issues": 58,
+      "issueComments": 18,
+      "insert": 17,
+      "update": 53,
+      "delete": 6,
+      "files": 22,
+      "unresolvedContainingFunctions": 0
+    },
+    "extension": {
+      "baseEntryCount": 70,
+      "parentCommit": "1df80f18ff2fa2d400f9a2faf3bb2499ea4f7e87",
+      "scope": "CLI and database production issue writers"
+    },
+    "trustedHelpers": [
+      {
+        "path": "packages/db/src/issue-versioning.ts",
+        "export": "versionedIssuePatch",
+        "kind": "implementation",
+        "sourceFileSha256": "BBB6DB739D78F75E8AD22EEABF814EB54AEE8BA6E4ABA3BF9768130CC9674EE6"
+      },
+      {
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch",
+        "kind": "reexport",
+        "module": "@paperclipai/db",
+        "sourceFileSha256": "1E1487ABCC9B504515D66D667D7FCAFC8EC4608E35D3A07547C7FF5C81E21AAB"
+      },
+      {
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation",
+        "kind": "implementation",
+        "sourceFileSha256": "1E1487ABCC9B504515D66D667D7FCAFC8EC4608E35D3A07547C7FF5C81E21AAB"
+      }
+    ],
+    "acceptedTrustedHelperDigestSha256": "4306996493C52A00348C476335184B0D4091274D9B8703DBE6B694D6A5D5A1B5"
+  },
+  "entries": [
+    {
+      "id": "M001",
+      "path": "cli/src/commands/worktree.ts",
+      "line": 1242,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "quarantineSeededWorktreeExecutionState",
+      "containingFunctionLine": 1189,
+      "sourceFileSha256": "639A68CD87E62ACC1A9AA0D9AEA3743F257FB5AAFDAABE22882CF1EC14D61915",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "packages/db/src/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M002",
+      "path": "cli/src/commands/worktree.ts",
+      "line": 1257,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "quarantineSeededWorktreeExecutionState",
+      "containingFunctionLine": 1189,
+      "sourceFileSha256": "639A68CD87E62ACC1A9AA0D9AEA3743F257FB5AAFDAABE22882CF1EC14D61915",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "packages/db/src/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M003",
+      "path": "cli/src/commands/worktree.ts",
+      "line": 2709,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "applyMergePlan",
+      "containingFunctionLine": 2595,
+      "sourceFileSha256": "639A68CD87E62ACC1A9AA0D9AEA3743F257FB5AAFDAABE22882CF1EC14D61915",
+      "classification": "issue_created_at_version_1",
+      "state": "verified_create",
+      "resolution": {
+        "kind": "schema_default",
+        "column": "issues.version",
+        "value": 1
+      }
+    },
+    {
+      "id": "M004",
+      "path": "cli/src/commands/worktree.ts",
+      "line": 2769,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "applyMergePlan",
+      "containingFunctionLine": 2595,
+      "sourceFileSha256": "639A68CD87E62ACC1A9AA0D9AEA3743F257FB5AAFDAABE22882CF1EC14D61915",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "packages/db/src/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M005",
+      "path": "cli/src/commands/worktree.ts",
+      "line": 2979,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "applyMergePlan",
+      "containingFunctionLine": 2595,
+      "sourceFileSha256": "639A68CD87E62ACC1A9AA0D9AEA3743F257FB5AAFDAABE22882CF1EC14D61915",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "packages/db/src/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M006",
+      "path": "packages/db/src/seed.ts",
+      "line": 74,
+      "receiver": "db",
+      "operation": "insert",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "<module>",
+      "containingFunctionLine": 1,
+      "sourceFileSha256": "808D480B39952C788AECCFF7552621824C428E3BD22406744F8C63193572474B",
+      "classification": "issue_created_at_version_1",
+      "state": "verified_create",
+      "resolution": {
+        "kind": "schema_default",
+        "column": "issues.version",
+        "value": 1
+      }
+    },
+    {
+      "id": "M007",
+      "path": "server/src/routes/execution-workspaces.ts",
+      "line": 648,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "executionWorkspaceRoutes",
+      "containingFunctionLine": 42,
+      "sourceFileSha256": "BA12B6E9CD4003CA88442340C8B6644513BC090D2851EE3D5243E16A1A9A447F",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M008",
+      "path": "server/src/routes/issues.ts",
+      "line": 6745,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issueRows",
+      "containingFunction": "issueRoutes",
+      "containingFunctionLine": 2577,
+      "sourceFileSha256": "0ED5BE09B70CC2C142DA06A276356AEF057A4AB281465BB4466A31AADE5A6683",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M009",
+      "path": "server/src/routes/issues.ts",
+      "line": 6755,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "issueRoutes",
+      "containingFunctionLine": 2577,
+      "sourceFileSha256": "0ED5BE09B70CC2C142DA06A276356AEF057A4AB281465BB4466A31AADE5A6683",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M010",
+      "path": "server/src/routes/pipelines.ts",
+      "line": 2029,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issues",
+      "tableToken": "issueRows",
+      "containingFunction": "pipelineRoutes",
+      "containingFunctionLine": 813,
+      "sourceFileSha256": "B2445C6A48C699C17D50D66E51535BB63E509F973399F7C8D972F75066C1B44C",
+      "classification": "issue_created_at_version_1",
+      "state": "verified_create",
+      "resolution": {
+        "kind": "schema_default",
+        "column": "issues.version",
+        "value": 1
+      }
+    },
+    {
+      "id": "M011",
+      "path": "server/src/services/access.ts",
+      "line": 370,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "archiveMember",
+      "containingFunctionLine": 322,
+      "sourceFileSha256": "3A19FAAB6E1A7FAB17FFA896D4A00F2E9E8E32584080A2FDD2E6F7063143A2B1",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M012",
+      "path": "server/src/services/access.ts",
+      "line": 382,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "archiveMember",
+      "containingFunctionLine": 322,
+      "sourceFileSha256": "3A19FAAB6E1A7FAB17FFA896D4A00F2E9E8E32584080A2FDD2E6F7063143A2B1",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M013",
+      "path": "server/src/services/agents.ts",
+      "line": 754,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "remove",
+      "containingFunctionLine": 735,
+      "sourceFileSha256": "59232BCEA2EAA79B9E6867799DFBC9FF7C93F566AFEB2E9E2B55E2EE23899E13",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M014",
+      "path": "server/src/services/agents.ts",
+      "line": 774,
+      "receiver": "tx",
+      "operation": "delete",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "remove",
+      "containingFunctionLine": 735,
+      "sourceFileSha256": "59232BCEA2EAA79B9E6867799DFBC9FF7C93F566AFEB2E9E2B55E2EE23899E13",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M015",
+      "path": "server/src/services/companies.ts",
+      "line": 452,
+      "receiver": "tx",
+      "operation": "delete",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "remove",
+      "containingFunctionLine": 432,
+      "sourceFileSha256": "8B45FC382D481CBB86B8DA67D74A6C20AAA5C46A87FEAEB2FD735849D2D5F25C",
+      "classification": "issue_deleted_same_transaction",
+      "state": "exempt",
+      "resolution": {
+        "kind": "same_transaction_issue_delete",
+        "path": "server/src/services/companies.ts"
+      }
+    },
+    {
+      "id": "M016",
+      "path": "server/src/services/companies.ts",
+      "line": 469,
+      "receiver": "tx",
+      "operation": "delete",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "remove",
+      "containingFunctionLine": 432,
+      "sourceFileSha256": "8B45FC382D481CBB86B8DA67D74A6C20AAA5C46A87FEAEB2FD735849D2D5F25C",
+      "classification": "issue_deleted_same_transaction",
+      "state": "exempt",
+      "resolution": {
+        "kind": "same_transaction_issue_delete",
+        "path": "server/src/services/companies.ts"
+      }
+    },
+    {
+      "id": "M017",
+      "path": "server/src/services/company-skills.ts",
+      "line": 6730,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "pruneExpiredTestHarnessIssues",
+      "containingFunctionLine": 6513,
+      "sourceFileSha256": "691F7B48D6F284FF2DB641A503DC1F85C1519B8BD00762D9A3816D79D6C757E3",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M018",
+      "path": "server/src/services/execution-workspaces.ts",
+      "line": 1964,
+      "receiver": "mtx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": null,
+      "sourceFileSha256": "2337841B54504C361EB6D0E013C43295AB36635C54EAE88C5F1631FBBE92D2C7",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M019",
+      "path": "server/src/services/execution-workspaces.ts",
+      "line": 2009,
+      "receiver": "mtx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": null,
+      "sourceFileSha256": "2337841B54504C361EB6D0E013C43295AB36635C54EAE88C5F1631FBBE92D2C7",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M020",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 7385,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": 6565,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M021",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 7704,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "dispatchClaimedIssueMonitor",
+      "containingFunctionLine": 6636,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M022",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 7470,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "clearIssueMonitorAndRecover",
+      "containingFunctionLine": 6700,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M023",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 7697,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "dispatchClaimedIssueMonitor",
+      "containingFunctionLine": 6700,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M024",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 7663,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "dispatchClaimedIssueMonitor",
+      "containingFunctionLine": 6700,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M025",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 7628,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "dispatchClaimedIssueMonitor",
+      "containingFunctionLine": 6700,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M026",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 7820,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "tickDueIssueMonitors",
+      "containingFunctionLine": 6897,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M027",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 7752,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "triggerIssueMonitor",
+      "containingFunctionLine": 6973,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M028",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 9430,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "enqueueMissingIssueCommentRetry",
+      "containingFunctionLine": 8462,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M029",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 9680,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "enqueueProcessLossRetry",
+      "containingFunctionLine": 8699,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M030",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 10367,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "cancelScheduledRetryForGate",
+      "containingFunctionLine": 9422,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M031",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 11049,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "scheduleBoundedRetryForRun",
+      "containingFunctionLine": 9598,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M032",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 12059,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "cancelQueuedRunForStaleIssue",
+      "containingFunctionLine": 10720,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M033",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 11795,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "claimQueuedRun",
+      "containingFunctionLine": 10877,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M034",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 11845,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "cancelQueuedRunForBlockedDependencies",
+      "containingFunctionLine": 11093,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M035",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 13017,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "executeRun",
+      "containingFunctionLine": 11867,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M036",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 15587,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "releaseIssueExecutionAndPromote",
+      "containingFunctionLine": 14469,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M037",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 16827,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "enqueueWakeup",
+      "containingFunctionLine": 14469,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M038",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 15892,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "releaseIssueExecutionAndPromote",
+      "containingFunctionLine": 14469,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M039",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 16051,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "releaseIssueExecutionAndPromote",
+      "containingFunctionLine": 14469,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M040",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 16206,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "releaseIssueExecutionAndPromote",
+      "containingFunctionLine": 15589,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M041",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 16674,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "cancelStaleScheduledRetry",
+      "containingFunctionLine": 15227,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M042",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 16789,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "enqueueWakeup",
+      "containingFunctionLine": 15227,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M043",
+      "path": "server/src/services/heartbeat.ts",
+      "line": 16945,
+      "receiver": "mtx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": null,
+      "sourceFileSha256": "E45CD8676B1BA03ECC9962406A154E203CADCC8DD5875E50091BE58E33898979",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M044",
+      "path": "server/src/services/issue-thread-interactions.ts",
+      "line": 234,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "touchIssue",
+      "containingFunctionLine": 233,
+      "sourceFileSha256": "9DD14E48C71B7F0E7EA8F747482B83197E190DE4943506517288206C1F8B9FC8",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M045",
+      "path": "server/src/services/issue-tree-control.ts",
+      "line": 875,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "cancelIssueStatusesForHold",
+      "containingFunctionLine": 854,
+      "sourceFileSha256": "C8914EF229B8C241B8A2BE93306340E7A8E9A36D3DE73D5EE568901DC7A2AE0A",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M046",
+      "path": "server/src/services/issue-tree-control.ts",
+      "line": 977,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "restoreIssueStatusesForHold",
+      "containingFunctionLine": 921,
+      "sourceFileSha256": "C8914EF229B8C241B8A2BE93306340E7A8E9A36D3DE73D5EE568901DC7A2AE0A",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M047",
+      "path": "server/src/services/issue-versioning.ts",
+      "line": 51,
+      "receiver": "dbOrTx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "bumpIssueVersions",
+      "containingFunctionLine": 43,
+      "sourceFileSha256": "1E1487ABCC9B504515D66D667D7FCAFC8EC4608E35D3A07547C7FF5C81E21AAB",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "packages/db/src/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M048",
+      "path": "server/src/services/issue-versioning.ts",
+      "line": 76,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "runInTransaction",
+      "containingFunctionLine": 59,
+      "sourceFileSha256": "1E1487ABCC9B504515D66D667D7FCAFC8EC4608E35D3A07547C7FF5C81E21AAB",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "packages/db/src/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M049",
+      "path": "server/src/services/issues.ts",
+      "line": 4948,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "clearCheckoutRunIfTerminal",
+      "containingFunctionLine": 4595,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M050",
+      "path": "server/src/services/issues.ts",
+      "line": 4779,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "adoptStaleCheckoutRun",
+      "containingFunctionLine": 4695,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M051",
+      "path": "server/src/services/issues.ts",
+      "line": 4838,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "adoptUnownedCheckoutRun",
+      "containingFunctionLine": 4741,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M052",
+      "path": "server/src/services/issues.ts",
+      "line": 4889,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "clearExecutionRunIfTerminal",
+      "containingFunctionLine": 4788,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M053",
+      "path": "server/src/services/issues.ts",
+      "line": 5017,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": 4890,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M054",
+      "path": "server/src/services/issues.ts",
+      "line": 5199,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "insertIssueComment",
+      "containingFunctionLine": 5041,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M055",
+      "path": "server/src/services/issues.ts",
+      "line": 5301,
+      "receiver": "tx",
+      "operation": "delete",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": 5175,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M056",
+      "path": "server/src/services/issues.ts",
+      "line": 5353,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": 5227,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M057",
+      "path": "server/src/services/issues.ts",
+      "line": 7173,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "create",
+      "containingFunctionLine": 6683,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "issue_created_at_version_1",
+      "state": "verified_create",
+      "resolution": {
+        "kind": "schema_default",
+        "column": "issues.version",
+        "value": 1
+      }
+    },
+    {
+      "id": "M058",
+      "path": "server/src/services/issues.ts",
+      "line": 7819,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": null,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M059",
+      "path": "server/src/services/issues.ts",
+      "line": 8133,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "checkout",
+      "containingFunctionLine": 7314,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M060",
+      "path": "server/src/services/issues.ts",
+      "line": 7946,
+      "receiver": "tx",
+      "operation": "delete",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "remove",
+      "containingFunctionLine": 7346,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "issue_deleted_same_transaction",
+      "state": "exempt",
+      "resolution": {
+        "kind": "same_transaction_issue_delete",
+        "path": "server/src/services/issues.ts"
+      }
+    },
+    {
+      "id": "M061",
+      "path": "server/src/services/issues.ts",
+      "line": 7917,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "clearExecutionWorkspaceEnvironmentSelection",
+      "containingFunctionLine": 7383,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M062",
+      "path": "server/src/services/issues.ts",
+      "line": 8068,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "checkout",
+      "containingFunctionLine": 7383,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M063",
+      "path": "server/src/services/issues.ts",
+      "line": 8021,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "checkout",
+      "containingFunctionLine": 7383,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M064",
+      "path": "server/src/services/issues.ts",
+      "line": 8398,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "adminForceRelease",
+      "containingFunctionLine": 7722,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M065",
+      "path": "server/src/services/issues.ts",
+      "line": 8353,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "release",
+      "containingFunctionLine": 7775,
+      "sourceFileSha256": "0E048E8996514956F1FB670C1AC09B76A2BEBB5E3BAE7CC8F5F367B063BF7495",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M066",
+      "path": "server/src/services/pipelines.ts",
+      "line": 1942,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": 1941,
+      "sourceFileSha256": "9B3E2B64A2AA39483D8DA271D4ACFDD3BE11BFCA2C95D90D3C5C27D50BECFD36",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M067",
+      "path": "server/src/services/pipelines.ts",
+      "line": 2062,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": 2061,
+      "sourceFileSha256": "9B3E2B64A2AA39483D8DA271D4ACFDD3BE11BFCA2C95D90D3C5C27D50BECFD36",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M068",
+      "path": "server/src/services/pipelines.ts",
+      "line": 4630,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "retryStageAutomation",
+      "containingFunctionLine": 4511,
+      "sourceFileSha256": "9B3E2B64A2AA39483D8DA271D4ACFDD3BE11BFCA2C95D90D3C5C27D50BECFD36",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M069",
+      "path": "server/src/services/plugin-host-services.ts",
+      "line": 2892,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issuesTable",
+      "containingFunction": "updatePolicy",
+      "containingFunctionLine": 2859,
+      "sourceFileSha256": "1CEB64CFDFA585782426021CF352A8A040823DB664C75512F6049229C61FCA09",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M070",
+      "path": "server/src/services/productivity-review.ts",
+      "line": 770,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "createOrUpdateReview",
+      "containingFunctionLine": 685,
+      "sourceFileSha256": "BF3F830CF11BB5902317ADD40B5BA73F6287739650CD9579DCA624E5895A1FD4",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M071",
+      "path": "server/src/services/recovery/service.ts",
+      "line": 1737,
+      "receiver": "tx",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "foldSourceResolvedStaleRun",
+      "containingFunctionLine": 1557,
+      "sourceFileSha256": "950EB794169AB1B42E4269CB33BF8A872D58EA67351BC8B3F348FF165BD6AA96",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M072",
+      "path": "server/src/services/recovery/service.ts",
+      "line": 5531,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "sweepStaleIssueLocks",
+      "containingFunctionLine": 5300,
+      "sourceFileSha256": "950EB794169AB1B42E4269CB33BF8A872D58EA67351BC8B3F348FF165BD6AA96",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M073",
+      "path": "server/src/services/routines.ts",
+      "line": 1879,
+      "receiver": "txDb",
+      "operation": "delete",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "dispatchRoutineRun",
+      "containingFunctionLine": 1614,
+      "sourceFileSha256": "A7A24BFC1EC64203CAB3154FAC6F28FADF178F64640614269D68546F4082B66D",
+      "classification": "issue_deleted_same_transaction",
+      "state": "exempt",
+      "resolution": {
+        "kind": "same_transaction_issue_delete",
+        "path": "server/src/services/routines.ts"
+      }
+    },
+    {
+      "id": "M074",
+      "path": "server/src/services/task-watchdogs.ts",
+      "line": 1359,
+      "receiver": "db",
+      "operation": "update",
+      "table": "issues",
+      "tableToken": "issues",
+      "containingFunction": "ensureReusableWatchdogIssue",
+      "containingFunctionLine": 1324,
+      "sourceFileSha256": "C3BD3CD386241CD1A443590FA9CC2FD668225C179D619B3E8EEAA9D7C5B8324C",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "versionedIssuePatch"
+      }
+    },
+    {
+      "id": "M075",
+      "path": "server/src/services/workspace-runtime.ts",
+      "line": 1206,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": 1183,
+      "sourceFileSha256": "5CB3D544C5A7226E7BA0D261851F3A0AA3F1A6B3F7021DC9E30A6B5AF6796FD7",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    },
+    {
+      "id": "M076",
+      "path": "server/src/services/workspace-runtime.ts",
+      "line": 1230,
+      "receiver": "tx",
+      "operation": "insert",
+      "table": "issueComments",
+      "tableToken": "issueComments",
+      "containingFunction": "mutate",
+      "containingFunctionLine": 1207,
+      "sourceFileSha256": "5CB3D544C5A7226E7BA0D261851F3A0AA3F1A6B3F7021DC9E30A6B5AF6796FD7",
+      "classification": "versioned",
+      "state": "versioned",
+      "resolution": {
+        "kind": "versioned_helper",
+        "path": "server/src/services/issue-versioning.ts",
+        "export": "runIssueMutation"
+      }
+    }
+  ]
+}

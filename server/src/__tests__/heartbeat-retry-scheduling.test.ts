@@ -22,6 +22,7 @@ import {
   getEmbeddedPostgresTestSupport,
   startEmbeddedPostgresTestDatabase,
 } from "./helpers/embedded-postgres.js";
+import { drainHeartbeatRunsToQuiescence } from "./helpers/drain-heartbeat-runs.js";
 import { registerServerAdapter, unregisterServerAdapter } from "../adapters/index.ts";
 import {
   BOUNDED_TRANSIENT_HEARTBEAT_RETRY_DELAYS_MS,
@@ -91,6 +92,13 @@ describeEmbeddedPostgres("heartbeat bounded retry scheduling", () => {
   }, 20_000);
 
   afterEach(async () => {
+    // Await every in-flight background heartbeat run to quiescence before the
+    // cleanup deletes. heartbeat.invoke claims a run and dispatches its
+    // execution fire-and-forget, and that run can schedule a follow-up retry
+    // wakeup, so a run or wakeup can still write heartbeat_runs and issues rows
+    // when teardown starts. The cleanup deletes issues before heartbeat_runs, so
+    // a late write races the deletes and can deadlock or break a foreign key.
+    await drainHeartbeatRunsToQuiescence(db, heartbeat);
     await cleanupRetryFixture();
   });
 
@@ -1604,7 +1612,6 @@ describeEmbeddedPostgres("heartbeat bounded retry scheduling", () => {
       assigneeAgentId: newAgentId,
       updatedAt: now,
     }).where(eq(issues.id, issueId));
-
     // Keep the new agent's queue from auto-claiming/executing during this unit test.
     await db.insert(heartbeatRuns).values(
       Array.from({ length: 5 }, () => ({
@@ -1759,6 +1766,11 @@ describeEmbeddedPostgres("heartbeat bounded retry scheduling", () => {
       assigneeAgentId: newAgentId,
       updatedAt: now,
     }).where(eq(issues.id, issueId));
+    const versionBeforePromotion = await db
+      .select({ version: issues.version })
+      .from(issues)
+      .where(eq(issues.id, issueId))
+      .then((rows) => rows[0]?.version);
 
     const promotion = await heartbeat.promoteDueScheduledRetries(scheduled.dueAt);
     expect(promotion).toEqual({ promoted: 0, runIds: [] });
@@ -1777,11 +1789,15 @@ describeEmbeddedPostgres("heartbeat bounded retry scheduling", () => {
     });
 
     const issue = await db
-      .select({ executionRunId: issues.executionRunId })
+      .select({
+        executionRunId: issues.executionRunId,
+        version: issues.version,
+      })
       .from(issues)
       .where(eq(issues.id, issueId))
       .then((rows) => rows[0] ?? null);
     expect(issue?.executionRunId).toBeNull();
+    expect(issue?.version).toBe((versionBeforePromotion ?? 0) + 1);
   });
 
   it("does not promote a scheduled retry after the issue is handed to a human owner", async () => {

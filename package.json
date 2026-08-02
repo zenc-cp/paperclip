@@ -40,6 +40,7 @@
     "check:token-gates": "node scripts/check-token-gates.mjs",
     "check:no-git-push": "node scripts/check-no-git-push.mjs",
     "test:check-no-git-push": "node --test scripts/check-no-git-push.test.mjs",
+    "test:install-sh-docker": "./scripts/test-install-sh-docker.sh",
     "test:hermes-gateway-smoke": "node --test scripts/smoke/hermes-gateway-smoke.test.mjs",
     "docs:dev": "cd docs && npx mintlify dev",
     "smoke:hermes-gateway-join": "./scripts/smoke/hermes-gateway-join.sh",
@@ -63,7 +64,8 @@
     "test:release-smoke:headed": "npx playwright test --config tests/release-smoke/playwright.config.ts --headed",
     "metrics:paperclip-commits": "tsx scripts/paperclip-commit-metrics.ts",
     "perf:issue-chat-long-thread": "node scripts/measure-issue-chat-long-thread.mjs",
-    "connections:ingest-app-definitions": "node scripts/ingest-app-definitions.mjs"
+    "connections:ingest-app-definitions": "node scripts/ingest-app-definitions.mjs",
+    "check:issue-version-writes": "node scripts/check-issue-version-writes.mjs --strict"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",

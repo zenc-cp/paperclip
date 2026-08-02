@@ -2,6 +2,7 @@ import express from "express";
 import request from "supertest";
 import { getTableName } from "drizzle-orm";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { buildIssueChanges } from "../services/issue-change-receipt.ts";
 import { normalizeIssueExecutionPolicy } from "../services/issue-execution-policy.ts";
 
 const mockIssueService = vi.hoisted(() => ({
@@ -39,10 +40,21 @@ const mockInstanceSettingsService = vi.hoisted(() => ({
       feedbackDataSharingPreference: "prompt",
     },
   })),
+  getGeneral: vi.fn(async () => ({
+    censorUsernameInLogs: false,
+    feedbackDataSharingPreference: "prompt",
+  })),
+  getExperimental: vi.fn(async () => ({})),
   listCompanyIds: vi.fn(async () => ["company-1"]),
 }));
 const mockRoutineService = vi.hoisted(() => ({
   syncRunStatusForIssue: vi.fn(async () => undefined),
+}));
+const mockEnvironmentRuntimeService = vi.hoisted(() => ({
+  destroyReusableSandboxLeases: vi.fn(async () => undefined),
+}));
+const mockEnvironmentService = vi.hoisted(() => ({
+  getById: vi.fn(async () => null),
 }));
 
 function registerModuleMocks() {
@@ -72,6 +84,21 @@ function registerModuleMocks() {
 
   vi.doMock("../services/routines.js", () => ({
     routineService: () => mockRoutineService,
+  }));
+
+  vi.doMock("../services/environment-runtime.js", () => ({
+    environmentRuntimeService: () => mockEnvironmentRuntimeService,
+  }));
+
+  vi.doMock("../services/environments.js", () => ({
+    environmentService: () => mockEnvironmentService,
+  }));
+
+  vi.doMock("../services/external-objects.js", () => ({
+    externalObjectService: () => ({
+      syncCommentSafely: vi.fn(async () => undefined),
+      syncIssueSafely: vi.fn(async () => undefined),
+    }),
   }));
 
   vi.doMock("../services/index.js", () => ({
@@ -120,6 +147,7 @@ function registerModuleMocks() {
     projectService: () => ({}),
     routineService: () => mockRoutineService,
     workProductService: () => ({}),
+    environmentService: () => mockEnvironmentService,
   }));
 }
 
@@ -149,14 +177,39 @@ function makeIssue() {
   return {
     id: "11111111-1111-4111-8111-111111111111",
     companyId: "company-1",
+    projectId: null,
+    parentId: null,
     status: "todo",
     assigneeAgentId: "22222222-2222-4222-8222-222222222222",
     assigneeUserId: null,
     createdByUserId: "local-board",
     identifier: "PAP-580",
     title: "Activity event issue",
+    description: null,
+    priority: "medium",
+    version: 1,
     executionPolicy: null,
     executionState: null,
+    executionWorkspaceId: null,
+    updatedAt: new Date("2026-07-30T12:00:00.000Z"),
+  };
+}
+
+function issueUpdateWithReceipt(issue: ReturnType<typeof makeIssue>, patch: Record<string, unknown>) {
+  const {
+    actorAgentId: _actorAgentId,
+    actorUserId: _actorUserId,
+    blockedByIssueIds: _blockedByIssueIds,
+    ...issuePatch
+  } = patch;
+  const updated = {
+    ...issue,
+    ...issuePatch,
+    updatedAt: new Date("2026-07-30T12:01:00.000Z"),
+  };
+  return {
+    ...updated,
+    changes: buildIssueChanges(issue, updated),
   };
 }
 
@@ -171,10 +224,13 @@ describe("issue activity event routes", () => {
     vi.doUnmock("../services/instance-settings.js");
     vi.doUnmock("../services/issues.js");
     vi.doUnmock("../services/routines.js");
-    vi.doUnmock("../routes/issues.js");
-    vi.doUnmock("../routes/authz.js");
-    vi.doUnmock("../middleware/index.js");
-    registerModuleMocks();
+        vi.doUnmock("../services/environment-runtime.js");
+        vi.doUnmock("../services/environments.js");
+        vi.doUnmock("../services/external-objects.js");
+        vi.doUnmock("../routes/issues.js");
+        vi.doUnmock("../routes/authz.js");
+        vi.doUnmock("../middleware/index.js");
+        registerModuleMocks();
     vi.clearAllMocks();
     mockIssueService.assertCheckoutOwner.mockResolvedValue({ adoptedFromRunId: null });
     mockIssueService.findMentionedAgents.mockResolvedValue([]);
@@ -201,8 +257,173 @@ describe("issue activity event routes", () => {
         feedbackDataSharingPreference: "prompt",
       },
     });
-    mockInstanceSettingsService.listCompanyIds.mockResolvedValue(["company-1"]);
-    mockRoutineService.syncRunStatusForIssue.mockResolvedValue(undefined);
+        mockInstanceSettingsService.getGeneral.mockResolvedValue({
+          censorUsernameInLogs: false,
+          feedbackDataSharingPreference: "prompt",
+        });
+        mockInstanceSettingsService.getExperimental.mockResolvedValue({});
+        mockInstanceSettingsService.listCompanyIds.mockResolvedValue(["company-1"]);
+        mockRoutineService.syncRunStatusForIssue.mockResolvedValue(undefined);
+        mockEnvironmentRuntimeService.destroyReusableSandboxLeases.mockResolvedValue(undefined);
+      });
+
+      it("returns a field-change receipt and omits a requested no-op field", async () => {
+        const issue = makeIssue();
+        mockIssueService.getById.mockResolvedValue(issue);
+        mockIssueService.update.mockImplementation(async (_id: string, patch: Record<string, unknown>) =>
+          issueUpdateWithReceipt(issue, patch));
+
+        const changed = await request(await createApp())
+          .patch(`/api/issues/${issue.id}`)
+          .send({ priority: "high" });
+        expect(changed.status, JSON.stringify(changed.body)).toBe(200);
+    expect(changed.body.changes).toEqual({
+      priority: { from: "medium", to: "high" },
+    });
+
+    const noOp = await request(await createApp())
+      .patch(`/api/issues/${issue.id}`)
+      .send({ title: issue.title });
+    expect(noOp.status).toBe(200);
+    expect(noOp.body.changes).not.toHaveProperty("title");
+  });
+
+  it("echoes scalar blocker state and summaries when setting and clearing blockers", async () => {
+    const issue = makeIssue();
+    const blockerId = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
+    let blockedByIssueIds: string[] = [];
+    const relationSummaries = () => ({
+      blockedBy: blockedByIssueIds.map((id) => ({
+        id,
+        identifier: "PAP-10",
+        title: "Blocker",
+        status: "todo",
+        priority: "medium",
+        assigneeAgentId: null,
+        assigneeUserId: null,
+      })),
+      blocks: [],
+    });
+    mockIssueService.getById.mockResolvedValue(issue);
+    mockIssueService.getRelationSummaries.mockImplementation(async () => relationSummaries());
+    mockIssueService.update.mockImplementation(async (_id: string, patch: Record<string, unknown>) => {
+      const from = blockedByIssueIds;
+      blockedByIssueIds = [...new Set(patch.blockedByIssueIds as string[])].sort();
+      return {
+        ...issueUpdateWithReceipt(issue, patch),
+        blockedByIssueIds,
+        changes: buildIssueChanges(issue, issue, {
+          blockedByIssueIds: { from, to: blockedByIssueIds },
+        }),
+      };
+    });
+
+    const setResponse = await request(await createApp())
+      .patch(`/api/issues/${issue.id}`)
+      .send({ blockedByIssueIds: [blockerId] });
+    expect(setResponse.status).toBe(200);
+    expect(setResponse.body).toMatchObject({
+      blockedByIssueIds: [blockerId],
+      blockedBy: [{ id: blockerId }],
+      blocks: [],
+      changes: { blockedByIssueIds: { from: [], to: [blockerId] } },
+    });
+
+    const clearResponse = await request(await createApp())
+      .patch(`/api/issues/${issue.id}`)
+      .send({ blockedByIssueIds: [] });
+    expect(clearResponse.status).toBe(200);
+    expect(clearResponse.body).toMatchObject({
+      blockedByIssueIds: [],
+      blockedBy: [],
+      blocks: [],
+      changes: { blockedByIssueIds: { from: [blockerId], to: [] } },
+    });
+  });
+
+  it("truncates long text receipt values to 200 characters and marks them updated", async () => {
+    const issue = {
+      ...makeIssue(),
+      title: "a".repeat(240),
+      description: "b".repeat(240),
+    };
+    mockIssueService.getById.mockResolvedValue(issue);
+    mockIssueService.update.mockImplementation(async (_id: string, patch: Record<string, unknown>) =>
+      issueUpdateWithReceipt(issue, patch));
+
+    const response = await request(await createApp())
+      .patch(`/api/issues/${issue.id}`)
+      .send({ title: "c".repeat(240), description: "d".repeat(240) });
+
+    expect(response.status).toBe(200);
+    expect(response.body.changes).toEqual({
+      title: { from: "a".repeat(200), to: "c".repeat(200), updated: true },
+      description: { from: "b".repeat(200), to: "d".repeat(200), updated: true },
+    });
+  });
+
+  it("returns only the minimal receipt fields when requested", async () => {
+    const issue = makeIssue();
+    mockIssueService.getById.mockResolvedValue(issue);
+    mockIssueService.update.mockImplementation(async (_id: string, patch: Record<string, unknown>) =>
+      issueUpdateWithReceipt(issue, patch));
+
+    const response = await request(await createApp())
+      .patch(`/api/issues/${issue.id}`)
+      .set("Prefer", "respond-async, return=minimal")
+      .send({ priority: "high" });
+
+    expect(response.status).toBe(200);
+    expect(response.headers["preference-applied"]).toBe("return=minimal");
+    expect(response.body).toEqual({
+      id: issue.id,
+      identifier: issue.identifier,
+      updatedAt: "2026-07-30T12:01:00.000Z",
+      changes: { priority: { from: "medium", to: "high" } },
+      comment: null,
+    });
+  });
+
+  it("preserves the default full response body with additive receipt fields", async () => {
+    const issue = makeIssue();
+    mockIssueService.getById.mockResolvedValue(issue);
+    mockIssueService.update.mockImplementation(async (_id: string, patch: Record<string, unknown>) =>
+      issueUpdateWithReceipt(issue, patch));
+
+    const response = await request(await createApp())
+      .patch(`/api/issues/${issue.id}`)
+      .send({ priority: "high" });
+
+    expect(response.status).toBe(200);
+    expect(response.headers["preference-applied"]).toBeUndefined();
+    expect(response.body).toMatchInlineSnapshot(`
+      {
+        "assigneeAgentId": "22222222-2222-4222-8222-222222222222",
+        "assigneeUserId": null,
+        "changes": {
+          "priority": {
+            "from": "medium",
+            "to": "high",
+          },
+        },
+        "comment": null,
+        "companyId": "company-1",
+        "createdByUserId": "local-board",
+        "description": null,
+        "executionPolicy": null,
+        "executionState": null,
+        "executionWorkspaceId": null,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "identifier": "PAP-580",
+        "parentId": null,
+        "priority": "high",
+        "projectId": null,
+        "status": "todo",
+        "title": "Activity event issue",
+        "updatedAt": "2026-07-30T12:01:00.000Z",
+        "version": 1,
+      }
+    `);
   });
 
   it("logs blocker activity with added and removed issue summaries", async () => {

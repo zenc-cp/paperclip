@@ -21,12 +21,13 @@ const apiPrefixes: Record<string, string> = {
   "auth.ts": "/api/auth",
   "board-chat.ts": "/api",
   "built-in-agents.ts": "/api",
-  "cloud-upstreams.ts": "/api",
   "companies.ts": "/api/companies",
   "company-skills.ts": "/api",
   "company-skill-policy.ts": "/api",
   "costs.ts": "/api",
   "dashboard.ts": "/api",
+  "decision-queues.ts": "/api",
+  "decisions.ts": "/api",
   "decision-training.ts": "/api",
   "environments.ts": "/api",
   "execution-workspaces.ts": "/api",
@@ -190,6 +191,26 @@ describe("openapi routes", () => {
     expect(res.body.paths["/api/companies/{companyId}/folders/items/move"].post.summary).toBe(
       "Move an item into or out of a folder",
     );
+    const createQueue = res.body.paths["/api/companies/{companyId}/decision-queues"].post;
+    expect(createQueue.security).toContainEqual({ AgentBearerAuth: [] });
+    expect(createQueue.responses["200"]).toBeDefined();
+    expect(createQueue.responses["201"]).toBeDefined();
+    expect(createQueue.requestBody.content["application/json"].schema).toMatchObject({
+      type: "object",
+      properties: {
+        key: { type: "string", minLength: 1, maxLength: 80 },
+        title: { type: "string", minLength: 1, maxLength: 120 },
+      },
+      required: ["key", "title"],
+    });
+    const updateTriage = res.body.paths[
+      "/api/companies/{companyId}/decision-triage/{sourceKind}/{sourceId}"
+    ].put;
+    expect(updateTriage.responses["422"]).toBeDefined();
+    expect(updateTriage.requestBody.content["application/json"].schema.properties).toMatchObject({
+      decideBy: { nullable: true },
+      snoozedUntil: { type: "string", format: "date-time", nullable: true },
+    });
     expect(JSON.stringify(res.body.paths["/api/tool-gateway/tools"].get)).not.toContain("sessionToken");
     expect(JSON.stringify(res.body.paths["/api/tool-gateway/tools/call"].post)).not.toContain("sessionToken");
   });
@@ -233,5 +254,38 @@ describe("openapi routes", () => {
     expect(spec.paths["/api/invites/{token}/accept"].post.responses["202"]).toBeDefined();
     expect(spec.paths["/api/board-api-keys"].post.responses["201"]).toBeDefined();
     expect(spec.paths["/api/companies/import"].post.responses["202"]).toBeDefined();
+  });
+
+  it("documents optional issue If-Match and strong ETag responses", () => {
+    const { spec } = loadSpecRoutes();
+    const patchIssue = spec.paths["/api/issues/{id}"].patch;
+    const addComment = spec.paths["/api/issues/{id}/comments"].post;
+    const deleteComment = spec.paths["/api/issues/{id}/comments/{commentId}"].delete;
+    const getIssue = spec.paths["/api/issues/{id}"].get;
+
+    for (const operation of [patchIssue, addComment, deleteComment]) {
+      expect(operation.parameters).toEqual(expect.arrayContaining([
+        expect.objectContaining({
+          name: "if-match",
+          in: "header",
+          required: false,
+          schema: expect.objectContaining({ type: "string" }),
+        }),
+      ]));
+      expect(operation.responses["400"]).toBeDefined();
+      expect(operation.responses["412"]).toMatchObject({
+        headers: {
+          ETag: expect.any(Object),
+          "Cache-Control": expect.any(Object),
+        },
+      });
+    }
+
+    expect(getIssue.responses["200"]).toMatchObject({
+      headers: {
+        ETag: expect.any(Object),
+        "Cache-Control": expect.any(Object),
+      },
+    });
   });
 });

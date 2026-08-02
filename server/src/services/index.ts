@@ -41,6 +41,18 @@ export {
   type IssueFilters,
 } from "./issues.js";
 export { issueThreadInteractionService } from "./issue-thread-interactions.js";
+export {
+  bumpIssueVersions,
+  IssueVersionConflictError,
+  runIssueMutation,
+  versionedIssuePatch,
+  type DbOrTx,
+  type DbTransaction,
+  type IssueMutationPatch,
+  type IssueMutationPlan,
+  type IssueMutationResult,
+  type RunIssueMutationInput,
+} from "./issue-versioning.js";
 export { issueTreeControlService } from "./issue-tree-control.js";
 export { issueApprovalService } from "./issue-approvals.js";
 export { issueReferenceService } from "./issue-references.js";
@@ -65,6 +77,7 @@ export { activityService, type ActivityFilters } from "./activity.js";
 export { workTimelineService, normalizeTimelineWindow } from "./work-timeline.js";
 export { attentionService } from "./attention.js";
 export { captureDecisionSnapshot, decisionTrainingService } from "./decision-training.js";
+export { decisionService } from "./decisions.js";
 export type {
   WorkTimelineActor,
   WorkTimelineEdge,
@@ -121,7 +134,7 @@ export {
 } from "./managed-config.js";
 export { bootstrapExecutionPolicyFromEnv } from "./execution-policy-bootstrap.js";
 export { applyManagedEnvironments } from "./managed-environments.js";
-export { cloudUpstreamService, reconcileCloudUpstreamRunsOnStartup } from "./cloud-upstreams.js";
+export { buildExportFidelityReport, collectExportFidelityCounts } from "./export-fidelity.js";
 export { companyPortabilityService } from "./company-portability.js";
 export { teamsCatalogService } from "./teams-catalog.js";
 export { environmentService } from "./environments.js";
